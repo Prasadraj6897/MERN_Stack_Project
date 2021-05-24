@@ -42,7 +42,7 @@ export const signUpController = async (req, res)=>{
         // const result = await Users.create({ firstName, lastName, email, password: hashedPassword, ConfirmPassword, gender, DOB, Location, role:'user'})
 
         const newUser = {
-            email: email, firstName: firstName, password: hashedPassword
+            email: email, firstName: firstName, password: hashedPassword, lastName: lastName, gender:gender, DOB:DOB,Location: Location, ConfirmPassword: ConfirmPassword
         }
 
         const activation_token =  createActivationToken(newUser)
@@ -59,6 +59,35 @@ export const signUpController = async (req, res)=>{
     catch(error){
     
         return res.status(400).json({message:error.message})
+    }
+}
+
+export const activateEmail = async(req, res) => {
+    try{
+        const {activation_token} = req.body;
+
+        const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN_SECRECT)
+
+        const {firstName, email, password, lastName, gender, DOB, Location, ConfirmPassword} = user
+
+        const check = await Users.findOne({email})
+
+        if(check)
+        {
+            return res.status(400).json({message : "This mail already exists"})
+        }
+
+        const newUser = new Users({
+            firstName, email, password, lastName, gender, DOB, Location, email, password, ConfirmPassword
+        })
+
+        await newUser.save()
+
+        res.json({msg : "Account has been activated"})
+    }
+    catch(error)
+    {
+
     }
 }
 
