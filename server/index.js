@@ -3,8 +3,11 @@ import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import mongoose from "mongoose"
+import cookieParser from 'cookie-parser'
+import fileUpload from 'express-fileupload'
 
 import indexRouter from './Routers/indexRouter.js'
+import UserRouter from './Routers/UserRouter/UserRouter.js'
 
 const app = express();
 
@@ -13,6 +16,11 @@ dotenv.config();
 //for passing data from client to server we need bodyparser
 app.use(bodyParser.json({limit:"30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit:"30mb", extended: true}));
+
+app.use(cookieParser())
+app.use(fileUpload({
+  useTempFiles: true
+}))
 
 app.use(cors());
 app.options('*', cors());
@@ -26,8 +34,7 @@ app.use(function(req, res, next) {
 
 
 app.use('/', indexRouter);
-
-
+app.use('/users', UserRouter);
 
 
 
