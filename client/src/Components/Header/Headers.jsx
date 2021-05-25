@@ -1,5 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+
+import './Header.css'
 /**
 * @author
 * @function Headers
@@ -9,19 +11,28 @@ const Headers = (props) => {
   return(
     <header>
         <div className="logo">
-		   <h1>
-				<Link to='/'>
+		   <h1 >
+				<Link className="link_" to='/'>
 					Home
 				</Link>
 		   </h1>
-		   <ul>
-			   <li>
-			   <Link to='/cart'>
+		</div>
+		<ul>
+			<li>
+			<Link to='/cart'>
+				<i className="fas fa-shopping-cart">
 					cart
-				</Link>
-			   </li>
-		   </ul>
-	   </div>
+				</i>	
+			</Link>
+			</li>
+			<li>
+			<Link to='/signin'>
+				<i className="fas fa-user">
+					Login
+				</i>	
+			</Link>
+			</li>
+		</ul>
     </header>
    )
   }

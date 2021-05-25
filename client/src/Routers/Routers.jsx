@@ -1,9 +1,8 @@
 import React from "react";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import Login from "../Components/Auth/Login/Login";
 import Body from "../Components/Body/Body";
 import Headers from "../Components/Header/Headers";
-import HomePage from "../Components/HomePage";
-
 
 let Routers = () => {
 
@@ -11,10 +10,9 @@ let Routers = () => {
         <>
             <Router>
                 <Headers />
-                <Body />
-                {/* <Switch>
-                    <Route exact path='/' component={HomePage} />    
-                </Switch> */}
+                <Switch>
+                    <Route exact path='/signin' component={Login} />    
+                </Switch>
             </Router>
         </>
         

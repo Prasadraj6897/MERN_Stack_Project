@@ -1,0 +1,36 @@
+header{
+    width: 100%;
+    min-height: 100px;
+    background: #282c28;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 30px;
+}
+.link_:hover{
+    text-decoration: none;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    text-transform: capitalize;
+    letter-spacing: 1.5px;
+}
+
+ul li{
+    list-style: none;
+    display: inline-block;
+    padding: 10px 20px;
+    opacity: 0.7;
+}
+
+ul li:hover{
+    opacity: 1.2;   
+}
+
+ul li i{
+    color: white;
+}

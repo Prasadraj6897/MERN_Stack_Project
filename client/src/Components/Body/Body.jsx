@@ -1,4 +1,5 @@
 import React from 'react'
+import Login from '../Auth/Login/Login'
 
 /**
 * @author
@@ -7,7 +8,9 @@ import React from 'react'
 
 const Body = (props) => {
   return(
-    <div>Body</div>
+    <div>
+		<Login />
+	</div>
    )
   }
 
