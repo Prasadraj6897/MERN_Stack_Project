@@ -12,6 +12,7 @@ const createActivationToken = (payload) => {
     return jwt.sign(payload, process.env.ACTIVATION_TOKEN_SECRECT, {expiresIn: "15m"})
 }
 
+//after getting access token
 const createAccessToken = (payload) => {
     return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRECT, {expiresIn: "7h"})
 }
@@ -142,6 +143,45 @@ export const getAccessTokenController = async (req, res)=>{
 
             res.json({access_token})
         })
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}
+
+export const ForgetPasswordController = async (req, res)=>{
+    const {email} = req.body
+    try{
+        const existingUser = await Users.findOne({email})
+        if(!existingUser){
+            return res.status(404).json({message : "This Email doesn't Exist"})
+        }
+        const access_token = createAccessToken({id:existingUser._id})
+
+        const url = `${process.env.CLIENT_URL}/user/activate/${access_token}`        
+        
+        sendMail(email, url, "Reset Password")
+
+        res.json({message : "Please Check your mail"})
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}
+
+export const ResetPasswordController = async (req, res)=>{
+    const {password} = req.body
+    try{
+        
+        const passwordHash = await bcrypt.hash(password, 12)
+
+        await Users.findOneAndUpdate({_id: req.user.id},{
+            password: passwordHash,
+            ConfirmPassword: password
+        })
+        res.json({message : "Password Successfully changed"})
     }
     catch(error){
        
