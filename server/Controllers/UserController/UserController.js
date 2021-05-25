@@ -203,3 +203,18 @@ export const getUserInfoController = async (req, res)=>{
            return res.status(500).json({message : "Something went wrong"})
         }
 }
+
+export const getALLUserInfoController = async (req, res)=>{
+        
+    try{
+        
+        const users = await Users.find({})
+
+        
+        res.json({users})
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}

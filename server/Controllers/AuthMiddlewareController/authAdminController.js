@@ -1,7 +1,7 @@
 import Users from '../../Models/Users/UserModels.js'
 
 
-export const authAdmin = (req, res, next) => {
+export const authAdmin = async (req, res, next) => {
     try{
         const user = await Users.findOne({_id: req.user.id})
 
