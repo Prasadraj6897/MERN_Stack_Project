@@ -218,3 +218,56 @@ export const getALLUserInfoController = async (req, res)=>{
        return res.status(500).json({message : "Something went wrong"})
     }
 }
+
+export const LogoutController = async (req, res)=>{
+        
+    try{
+        
+        res.clearCookie('refresh_token', {path: '/users/refresh_token'},)
+
+        
+        return res.json({message : "Logged Out"})
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}
+
+export const UpdateUserInfoController = async (req, res)=>{
+        
+    try{
+        
+        const {firstName, lastName, avatar} = req.body
+
+        await Users.findByIdAndUpdate({_id: req.user.id}, {
+            firstName, lastName, avatar
+        })
+
+        
+        res.json({message : "Updated SuccessFully"})
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}
+
+export const UpdateUserRoleController = async (req, res)=>{
+        
+    try{
+        
+        const {role} = req.body
+
+        await Users.findByIdAndUpdate({_id: req.params.id}, {
+            role
+        })
+
+        
+        res.json({message : "Updated SuccessFully"})
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}
