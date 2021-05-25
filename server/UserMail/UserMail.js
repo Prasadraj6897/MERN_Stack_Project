@@ -22,13 +22,13 @@ const oauth2Client = new OAuth2(
 )
 
 //send mail
-// console.log("2")
+
 export const sendMail = (to, url, txt) => {
-    // console.log(MAILING_SERVICE_REFRESH_TOKEN)
+
     oauth2Client.setCredentials({
         refresh_token: MAILING_SERVICE_REFRESH_TOKEN
     })
-    // console.log("4")
+   
     const accesstoken = oauth2Client.getAccessToken();
     const smtpTransport = nodemailer.createTransport({
         service: 'gmail',
@@ -61,8 +61,6 @@ export const sendMail = (to, url, txt) => {
             </div>
         `
     }
-
-    // console.log(mailOptions.html)
 
     smtpTransport.sendMail(mailOptions, (err, infor) => {
         if(err) return err;

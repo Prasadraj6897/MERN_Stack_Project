@@ -7,7 +7,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 
-
+// for signup after mail verrify
 const createActivationToken = (payload) => {
     return jwt.sign(payload, process.env.ACTIVATION_TOKEN_SECRECT, {expiresIn: "15m"})
 }
@@ -16,7 +16,7 @@ const createAccessToken = (payload) => {
     return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRECT, {expiresIn: "7h"})
 }
 
-
+//for login verify
 const createRefreshToken = (payload) => {
     return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRECT, {expiresIn: "1d"})
 }
@@ -49,7 +49,7 @@ export const signUpController = async (req, res)=>{
         
         const url = `${process.env.CLIENT_URL}/user/activate/${activation_token}`
         
-        // console.log("1")
+        
         sendMail(email, url, "verify your Email Address")
 
         res.json({msg: "Register Success! Please activate your email to start"})
@@ -97,7 +97,7 @@ export const signInController = async (req, res)=>{
     try{
         const existingUser = await Users.findOne({email})
         if(!existingUser){
-            return res.status(404).json({message : "User doesn't Exist"})
+            return res.status(404).json({message : "This Email doesn't Exist"})
         }
 
         const isPasswordcorrect = await bcrypt.compare(password, existingUser.password)
@@ -106,17 +106,42 @@ export const signInController = async (req, res)=>{
             return res.status(400).json({message : "Password doesn't Match"})
         }
         
-        if(existingUser.role != 'user'){
-            return res.status(400).json({message : "You have no access"})
+       
+        const refresh_token = createRefreshToken({id:existingUser._id, email:existingUser.email})
+        // const token = jwt.sign({email: existingUser.email, id: existingUser._id, role: existingUser.role}, 'test', {expiresIn: "1d"})
+
+        res.cookie('refresh_token', refresh_token,{
+            httpOnly: true,
+            path: '/users/refresh_token',
+            maxAge: 7*24*60*60*1000 // 7 Days validity
+        })
+        
+
+        res.status(200).json({msg: "Login Successful"})
+
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}
+
+export const getAccessTokenController = async (req, res)=>{
+
+    try{
+        const rf_token = req.cookies.refresh_token
+
+        if(!rf_token){
+            return res.status(500).json({message : "Please Login Now"})
         }
+        jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRECT, (err, user) => {
+            if(err){
+                return res.status(500).json({message : "Please Login Now"})
+            }
+            const access_token = createAccessToken({id:user.id})
 
-        const token = jwt.sign({email: existingUser.email, id: existingUser._id, role: existingUser.role}, 'test', {expiresIn: "1d"})
-
-        //created cookie
-        res.cookie('token', token, {expiresIn: "1d"})
-
-        return res.status(200).json({result:existingUser, token})
-
+            res.json({access_token})
+        })
     }
     catch(error){
        
