@@ -1,5 +1,5 @@
 import express from "express"
-import { activateEmail, ForgetPasswordController, getAccessTokenController, 
+import { activateEmail, DeleteUserController, ForgetPasswordController, getAccessTokenController, 
 getALLUserInfoController, getUserInfoController, LogoutController, 
 ResetPasswordController, signInController, signUpController,
  UpdateUserInfoController, UpdateUserRoleController } from "../../Controllers/UserController/UserController.js";
@@ -24,5 +24,7 @@ router.get('/logout', LogoutController)
 //Update Users
 router.patch('/update', authMiddleware, UpdateUserInfoController)
 router.patch('/update_role/:id', authMiddleware, authAdmin, UpdateUserRoleController)
+
+router.delete('/delete/:id', authMiddleware, authAdmin, DeleteUserController)
 
 export default router;

@@ -8,6 +8,7 @@ import fileUpload from 'express-fileupload'
 
 import indexRouter from './Routers/indexRouter.js'
 import UserRouter from './Routers/UserRouter/UserRouter.js'
+import ImageRouter from './Routers/UploadRouter/UploadRouter.js'
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use(function(req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/users', UserRouter);
+app.use('/api', ImageRouter);
 
 
 

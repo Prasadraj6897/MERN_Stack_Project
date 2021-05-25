@@ -264,7 +264,21 @@ export const UpdateUserRoleController = async (req, res)=>{
         })
 
         
-        res.json({message : "Updated SuccessFully"})
+        res.json({message : "Role Updated SuccessFully"})
+    }
+    catch(error){
+       
+       return res.status(500).json({message : "Something went wrong"})
+    }
+}
+
+export const DeleteUserController = async (req, res)=>{
+        
+    try{
+
+        await Users.findByIdAndDelete(req.params.id)
+        
+        res.json({message : "Deleted SuccessFully"})
     }
     catch(error){
        
