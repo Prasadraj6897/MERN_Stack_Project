@@ -188,3 +188,18 @@ export const ResetPasswordController = async (req, res)=>{
        return res.status(500).json({message : "Something went wrong"})
     }
 }
+
+export const getUserInfoController = async (req, res)=>{
+        
+        try{
+            
+            const user = await Users.findById(req.user.id).select('-password')
+    
+            
+            res.json({user})
+        }
+        catch(error){
+           
+           return res.status(500).json({message : "Something went wrong"})
+        }
+}
