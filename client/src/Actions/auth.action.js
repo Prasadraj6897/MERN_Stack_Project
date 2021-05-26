@@ -1,16 +1,13 @@
 import {authConstants} from '../Constants/Constants'
 import axiosInstance from '../Helpers/axios'
 
-let login_action = (payload) => {
-    console.log(payload)
+let login_action = (payload, history) => {
     return async (dispatch) => {
         
         try{
                        
             dispatch({type : authConstants.LOGIN_REQUEST})
             const res = await axiosInstance.post('/users/signin',payload)
-           
-            // console.log("resresresresresresresres", res)
             if(res.status === 200){
                 const {message} = res.data;
                 
@@ -25,6 +22,7 @@ let login_action = (payload) => {
                         }
                     }
                 )
+                history.push('/')
             }
             
         }catch(error){

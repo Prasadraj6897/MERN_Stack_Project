@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState,useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import './style.css'
 import { login_action } from '../../../Actions/auth.action'
@@ -18,20 +18,20 @@ const Login = (props) => {
     const [success, setsuccess] = useState('')
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const User = useSelector(state =>state.Auth_Root_Reducer)
-
+    
     const handleSubmit = (e) =>{
         e.preventDefault()
-        seterr('')
-        setsuccess('')
+
         const payload = {
             email,
             password
         }
 
-        dispatch(login_action(payload))
-      
+        dispatch(login_action(payload, history))
+        
         
     }
   return(
@@ -40,8 +40,8 @@ const Login = (props) => {
           
            <h4>Login</h4>
            
-           {User.error && showErrMsg(User.error)}
-           {User.success && showSuccessMsg(User.success)}
+           {User.error ? showErrMsg(User.error) : null }
+           {User.success ? showSuccessMsg(User.success) : null}
 
            <form onSubmit={handleSubmit}>
                <div>
