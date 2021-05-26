@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
 import './style.css'
+import { login_action } from '../../../Actions/auth.action'
+import { showErrMsg, showSuccessMsg } from '../../Utils/Notification/Notification'
+
 /**
 * @author
 * @function Login
@@ -13,26 +17,32 @@ const Login = (props) => {
     const [err, seterr] = useState('')
     const [success, setsuccess] = useState('')
 
+    const dispatch = useDispatch()
+
+    const User = useSelector(state =>state.Auth_Root_Reducer)
+
     const handleSubmit = (e) =>{
         e.preventDefault()
-        
+        seterr('')
+        setsuccess('')
         const payload = {
             email,
             password
         }
-        try{
-            console.log({payload})
-        }
-        catch(error)
-        {
-            console.log(error)
-        }
-        
+
+        dispatch(login_action(payload))
+      
         
     }
   return(
        <div className='loginPage'>
+           {/* {JSON.stringify(User)} */}
+          
            <h4>Login</h4>
+           
+           {User.error && showErrMsg(User.error)}
+           {User.success && showSuccessMsg(User.success)}
+
            <form onSubmit={handleSubmit}>
                <div>
                    <label html="email">Email Address</label>

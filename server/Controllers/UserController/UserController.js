@@ -53,7 +53,7 @@ export const signUpController = async (req, res)=>{
         
         sendMail(email, url, "verify your Email Address")
 
-        res.json({msg: "Register Success! Please activate your email to start"})
+        res.json({message: "Register Success! Please activate your email to start"})
 
         // return res.status(200).json({result, activation_token})
     }
@@ -84,7 +84,7 @@ export const activateEmail = async(req, res) => {
 
         await newUser.save()
 
-        res.json({msg : "Account has been activated"})
+        res.json({message : "Account has been activated"})
     }
     catch(error)
     {
@@ -118,7 +118,7 @@ export const signInController = async (req, res)=>{
         })
         
 
-        res.status(200).json({msg: "Login Successful"})
+        res.status(200).json({message: "Login Successful"})
 
     }
     catch(error){

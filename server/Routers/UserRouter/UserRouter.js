@@ -11,9 +11,9 @@ import { authAdmin } from "../../Controllers/AuthMiddlewareController/authAdminC
 const router = express.Router();
 
 
-router.post('/signup', SignUpValidationRequest, isRequestValidators, signUpController)
+router.post('/signup', signUpController)
 router.post('/activateEmail', activateEmail)
-router.post('/signin', SignInValidationRequest, isRequestValidators, signInController)
+router.post('/signin', signInController)
 router.post('/refresh_token', getAccessTokenController)
 router.post('/forget', ForgetPasswordController)
 router.post('/resetpassword', authMiddleware, ResetPasswordController)
