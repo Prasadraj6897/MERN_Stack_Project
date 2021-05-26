@@ -1,4 +1,5 @@
 import React from 'react'
+import ActivationEmail from '../Auth/ActivationEmail/ActivationEmail'
 import Login from '../Auth/Login/Login'
 
 /**
@@ -9,7 +10,8 @@ import Login from '../Auth/Login/Login'
 const Body = (props) => {
   return(
     <div>
-		<Login />
+		{/* <Login />
+    <ActivationEmail /> */}
 	</div>
    )
   }

@@ -26,7 +26,7 @@ const createRefreshToken = (payload) => {
 export const signUpController = async (req, res)=>{
     //, role, contactNumber, profilePicture
     // console.log(req.body)
-    const { firstName, lastName, gender, DOB, Location, email, password, ConfirmPassword} = req.body
+    const { firstName, lastName, gender, DOB, Location, email, password, ConfirmPassword, contactNumber} = req.body
 
     try{
         if(!firstName || !lastName || !email || !password || !ConfirmPassword)
@@ -49,7 +49,9 @@ export const signUpController = async (req, res)=>{
         // const result = await Users.create({ firstName, lastName, email, password: hashedPassword, ConfirmPassword, gender, DOB, Location, role:'user'})
 
         const newUser = {
-            email: email, firstName: firstName, password: hashedPassword, lastName: lastName, gender:gender, DOB:DOB,Location: Location, ConfirmPassword: ConfirmPassword
+            email: email, firstName: firstName, password: hashedPassword, lastName: lastName,
+             gender:gender, DOB:DOB,Location: Location, ConfirmPassword: ConfirmPassword,
+             contactNumber: contactNumber
         }
 
         const activation_token =  createActivationToken(newUser)
@@ -75,7 +77,7 @@ export const activateEmail = async(req, res) => {
 
         const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN_SECRECT)
 
-        const {firstName, email, password, lastName, gender, DOB, Location, ConfirmPassword} = user
+        const {firstName, email, password, lastName, gender, DOB, Location, ConfirmPassword, contactNumber} = user
 
         const check = await Users.findOne({email})
 
@@ -85,7 +87,7 @@ export const activateEmail = async(req, res) => {
         }
 
         const newUser = new Users({
-            firstName, email, password, lastName, gender, DOB, Location, email, password, ConfirmPassword
+            firstName, email, password, lastName, gender, DOB, Location, email, password, ConfirmPassword, contactNumber
         })
 
         await newUser.save()

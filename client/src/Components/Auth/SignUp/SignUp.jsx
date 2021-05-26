@@ -9,8 +9,10 @@ import { getMonth, getYear } from 'date-fns';
 import range from "lodash/range";
 import "react-datepicker/dist/react-datepicker.css";
 
-import ReactPhoneInput, { formatPhoneNumberIntl, isValidPhoneNumber} from 'react-phone-number-input'
+import ReactPhoneInput, { formatPhoneNumberIntl} from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
+import { isEmail, isEmpty, isLength, isMatch } from '../../Utils/Validation/Validation'
+import { signup_action } from '../../../Actions/auth.action'
 /**
 * @author
 * @function Login
@@ -42,20 +44,43 @@ const Register = (props) => {
 	];
     const [Location, setLocation] = useState('')
     const [contactNum, setcontactNumber] = useState('')
-    const [contactNumerr, setcontactNumerr] = useState(false)
     const [err, seterr] = useState('')
     const [success, setsuccess] = useState('')
 
     const dispatch = useDispatch()
     const history = useHistory()
 
-    // const User = useSelector(state =>state.Auth_Root_Reducer)
+    const User = useSelector(state =>state.Auth_Root_Reducer)
     
+	useEffect(()=>{
+		{User.error ? seterr(User.error) : null }
+		{User.success ? setsuccess(User.success) : null }
+	},[User])
     const handleSubmit = (e) =>{
         e.preventDefault()
 		
 		let contactNumber = contactNum && formatPhoneNumberIntl(contactNum)
 		let DOB = DOBirth && DOBirth.toString()
+
+		if(isEmpty(firstName) || isEmpty(lastName))
+		{
+			return seterr('Please Fill all the fields')
+		}
+		if(!isEmail(email) )
+		{
+			return seterr('Invalid Email Address')
+		}
+		
+		if(isLength(password))
+		{
+			return seterr('Password must be 6 characters')
+		}
+		
+		if(!isMatch(password, ConfirmPassword))
+		{
+			return seterr('Password Must be match')
+		}
+		
 		
         const payload = {
 			firstName,
@@ -69,8 +94,9 @@ const Register = (props) => {
 			contactNumber
         }
 		console.log(payload)
-
-        // dispatch(login_action(payload, history))
+		dispatch(signup_action(payload))
+		return seterr('')
+        // 
         
         
     }
@@ -80,8 +106,8 @@ const Register = (props) => {
           
            <h4>Register</h4>
            
-           {/* {User.error ? showErrMsg(User.error) : null }
-           {User.success ? showSuccessMsg(User.success) : null} */}
+           {err ? showErrMsg(err) : null }
+           {success ? showSuccessMsg(success) : null}
 
            <form onSubmit={handleSubmit}>
 
