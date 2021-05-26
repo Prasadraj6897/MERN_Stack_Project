@@ -217,13 +217,12 @@ const Register = (props) => {
 					
 				</div>
 
-				<div className="row">
-                    <button type="submit">Register</button>                   
+				<div className="row" style={{marginBottom:"60px"}}>
+                    <button type="submit">Register</button> 
+					<Link to="/signin">Already Have an Account, SignIn</Link>                  
                </div>
 
-               <div className="row" style={{marginLeft:"60px", display:"block"}}>
-                    <Link to="/signin">Already Have an Account, SignIn</Link>
-               </div>
+              
            </form>
        </div>
    )
