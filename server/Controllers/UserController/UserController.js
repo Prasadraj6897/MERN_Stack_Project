@@ -29,6 +29,12 @@ export const signUpController = async (req, res)=>{
     const { firstName, lastName, gender, DOB, Location, email, password, ConfirmPassword} = req.body
 
     try{
+        if(!firstName || !lastName || !email || !password || !ConfirmPassword)
+        {
+            return res.status(400).json({msg: "Please fill in all fields."})
+        }
+        
+
         const existingUser = await Users.findOne({email})
         if(existingUser){
             return res.status(400).json({message : "User already Exist"})

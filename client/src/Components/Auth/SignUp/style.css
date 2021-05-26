@@ -1,0 +1,52 @@
+.container{
+    float: left;
+    margin: 10px;
+    display: flex;
+}
+/* .right{
+    float: left;
+    margin: 10px;
+	color: blue;
+	font-size: 20px;
+    font-weight:bold;
+} */
+.radio {
+    width: 25px;
+    position: relative;
+}
+.radio label {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px white, 3px 3px 9px rgba(0,0,0,0.5);
+    border: 1px solid black;
+}
+.radio label:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 2.5px;
+    border: 6px solid blue;
+    border-radius: 50px;
+    opacity: 0;
+    }
+.radio label:hover::after {
+    opacity: 0.3;
+    }
+.radio input[type=radio] {
+    visibility: hidden;
+}
+.radio input[type=radio]:checked + label:after {
+     opacity: 1;
+     
+    }
+
+.DatePicker{
+    width: auto;
+    height: auto;
+}

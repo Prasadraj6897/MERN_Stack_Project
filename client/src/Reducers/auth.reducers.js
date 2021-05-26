@@ -6,7 +6,7 @@ let initial_state  = {
     authenticating: false,
     loading: false,
     error: null,
-    success: '',  
+    success: null,  
 }
 
 let auth_reducer = (state = initial_state, action) =>{
