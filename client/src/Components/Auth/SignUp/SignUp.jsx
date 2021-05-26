@@ -192,9 +192,10 @@ const Register = (props) => {
 									boxSizing: "border-box",
 									padding:"0 50px",
 									paddingTop:"20px",
-									maxWidth:"100px"
+									maxWidth:"220px",
+									paddingTop:"7px"
 									}}>
-						<select value={Location} onChange={(e) => setLocation(e.target.value)}>
+						<select style={{width:"220px", height:"50px", paddingBottom:"15px"}} value={Location} onChange={(e) => setLocation(e.target.value)}>
 								<option value={""}>Select Location</option>
 								<option value={"America"}>America</option>
 								<option value={"England"}>England</option>
@@ -203,7 +204,7 @@ const Register = (props) => {
 						</div> 
 				</div>
 
-		   		
+				<label>PhoneNumber</label>
 				<div>
 					<ReactPhoneInput
 						international
