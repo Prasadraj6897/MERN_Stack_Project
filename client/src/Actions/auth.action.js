@@ -1,13 +1,28 @@
 import {authConstants} from '../Constants/Constants'
-import axiosInstance from '../Helpers/axios'
-
+import axiosInstance from '../Helpers/axiosInstance'
+import axios from 'axios';
+// const apiUrl = 'http://localhost:5000';
+// axios.interceptors.request.use(
+//     config => {
+//       const { origin } = new URL(config.url);
+//       const allowedOrigins = [apiUrl];
+//       const token = localStorage.getItem('token');
+//       if (allowedOrigins.includes(origin)) {
+//         config.headers.authorization = `Bearer ${token}`;
+//       }
+//       return config;
+//     },
+//     error => {
+//       return Promise.reject(error);
+//     }
+//   );
 let login_action = (payload, history) => {
     return async (dispatch) => {
         
         try{
                        
             dispatch({type : authConstants.LOGIN_REQUEST})
-            const res = await axiosInstance.post('/users/signin',payload)
+            const res = await axios.post('/users/signin',payload)
             if(res.status === 200){
                 const {message} = res.data;
                 
@@ -26,16 +41,16 @@ let login_action = (payload, history) => {
             }
             
         }catch(error){
-            // console.log("errorerror", error.response.data.message)
-            if(error)
-            {
-                dispatch({
-                    type : authConstants.LOGIN_FAILURE, 
-                    payload:{
-                        error : error.response.data.message
-                    }
-                })
-            }
+            console.log("errorerror", error)
+            // if(error)
+            // {
+            //     dispatch({
+            //         type : authConstants.LOGIN_FAILURE, 
+            //         payload:{
+            //             error : error.response.data.message
+            //         }
+            //     })
+            // }
            
         }
     } 
@@ -48,7 +63,7 @@ let signup_action = (userdata) => {
         try{
             
             dispatch({type : authConstants.SIGNUP_REQUEST})
-            const res = await axiosInstance.post('/users/signup',userdata)
+            const res = await axios.post('/users/signup',userdata)
             const {message} = res.data
             if(res.status === 200){
                 // const {message, token, result} = res.data;

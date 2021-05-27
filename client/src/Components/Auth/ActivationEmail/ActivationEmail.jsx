@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import axiosInstance from '../../../Helpers/axios'
+// import axiosInstance from '../../../Helpers/axiosInstance'
 import { showErrMsg, showSuccessMsg } from '../../Utils/Notification/Notification'
-
+import axios from 'axios'
 /**
 * @author
 * @function ActivationEmail
@@ -20,7 +20,7 @@ const ActivationEmail = (props) => {
         {
             const activationEmail = async () =>{
                 try{
-                    const res = await axiosInstance.post('/users/activateEmail',{activation_token})
+                    const res = await axios.post('/users/activateEmail',{activation_token})
                     setsuccess(res.data.message)
                 }
                 catch(error)

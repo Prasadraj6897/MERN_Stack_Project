@@ -19,7 +19,8 @@ const createAccessToken = (payload) => {
 
 //for login verify
 const createRefreshToken = (payload) => {
-    return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRECT, {expiresIn: "1d"})
+        return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRECT, {expiresIn: "1d"})
+
 }
 
 
@@ -122,8 +123,10 @@ export const signInController = async (req, res)=>{
         res.cookie('refresh_token', refresh_token,{
             httpOnly: true,
             path: '/users/refresh_token',
-            maxAge: 7*24*60*60*1000 // 7 Days validity
+            maxAge: 7*24*60*60*1000, // 7 Days validity
         })
+    
+        
         
 
         res.status(200).json({message: "Login Successful"})
@@ -139,7 +142,7 @@ export const getAccessTokenController = async (req, res)=>{
 
     try{
         const rf_token = req.cookies.refresh_token
-
+        console.log(rf_token)
         if(!rf_token){
             return res.status(500).json({message : "Please Login Now"})
         }
