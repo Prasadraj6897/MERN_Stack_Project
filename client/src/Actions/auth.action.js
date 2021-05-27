@@ -41,16 +41,16 @@ let login_action = (payload, history) => {
             }
             
         }catch(error){
-            console.log("errorerror", error)
-            // if(error)
-            // {
-            //     dispatch({
-            //         type : authConstants.LOGIN_FAILURE, 
-            //         payload:{
-            //             error : error.response.data.message
-            //         }
-            //     })
-            // }
+            // console.log("errorerror", error)
+            if(error)
+            {
+                dispatch({
+                    type : authConstants.LOGIN_FAILURE, 
+                    payload:{
+                        error : error.response.data.message
+                    }
+                })
+            }
            
         }
     } 

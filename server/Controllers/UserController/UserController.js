@@ -142,7 +142,7 @@ export const getAccessTokenController = async (req, res)=>{
 
     try{
         const rf_token = req.cookies.refresh_token
-        console.log(rf_token)
+        // console.log(rf_token)
         if(!rf_token){
             return res.status(500).json({message : "Please Login Now"})
         }
