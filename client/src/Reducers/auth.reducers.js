@@ -6,7 +6,10 @@ let initial_state  = {
     authenticating: false,
     loading: false,
     error: null,
-    success: null,  
+    success: null,
+    isLogged: false,
+    isAdmin: false,
+    user:[],
 }
 
 let auth_reducer = (state = initial_state, action) =>{
@@ -26,6 +29,7 @@ let auth_reducer = (state = initial_state, action) =>{
                 authenticating: false,
                 success:action.payload.message,
                 error: null,
+                isLogged: true
             }
         case authConstants.LOGIN_FAILURE :    
                            
