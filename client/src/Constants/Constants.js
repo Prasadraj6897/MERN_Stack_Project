@@ -9,3 +9,7 @@ export const authConstants = {
     SIGNUP_SUCCESS : "SIGNUP_SUCCESS",
     SIGNUP_FAILURE : "SIGNUP_FAILURE",
 }
+
+export const tokenConstants = {
+    GET_TOKEN : "GET_TOKEN"
+}
