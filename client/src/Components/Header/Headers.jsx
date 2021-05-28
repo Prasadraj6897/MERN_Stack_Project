@@ -13,11 +13,15 @@ const Headers = (props) => {
 	const User = useSelector(state =>state.Auth_Root_Reducer)
 	const {user, isLogged} = User
 
+	
+    const UserDetail = useSelector(state =>state.User_Detail_Root_Reducer.userData)
+
+
 	const userLink = () => {
 		return <li>
-			<Link>
-				<img src={user.avatar} alt=""/>
-				{user.firstName}
+			<Link to="/">
+				<img src={UserDetail.avatar} alt=""/>
+				{UserDetail.firstName}
 			</Link>
 		</li>
 	}

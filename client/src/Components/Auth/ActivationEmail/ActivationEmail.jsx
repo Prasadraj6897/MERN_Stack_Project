@@ -10,7 +10,7 @@ import axios from 'axios'
 
 const ActivationEmail = (props) => {
     // console.log(useParams())
-    const {activation_token} = useParams()
+    const {activation_token} = useParams() //params from routes
 
     const [err, seterr] = useState('')
     const [success, setsuccess] = useState('')

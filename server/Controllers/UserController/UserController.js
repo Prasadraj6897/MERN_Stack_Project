@@ -207,7 +207,7 @@ export const getUserInfoController = async (req, res)=>{
             const user = await Users.findById(req.user.id).select('-password')
     
             
-            res.json({user})
+            res.status(200).json({user})
         }
         catch(error){
            

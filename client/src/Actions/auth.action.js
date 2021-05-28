@@ -1,21 +1,6 @@
 import {authConstants} from '../Constants/Constants'
-import axiosInstance from '../Helpers/axiosInstance'
 import axios from 'axios';
-// const apiUrl = 'http://localhost:5000';
-// axios.interceptors.request.use(
-//     config => {
-//       const { origin } = new URL(config.url);
-//       const allowedOrigins = [apiUrl];
-//       const token = localStorage.getItem('token');
-//       if (allowedOrigins.includes(origin)) {
-//         config.headers.authorization = `Bearer ${token}`;
-//       }
-//       return config;
-//     },
-//     error => {
-//       return Promise.reject(error);
-//     }
-//   );
+
 let login_action = (payload, history) => {
     return async (dispatch) => {
         

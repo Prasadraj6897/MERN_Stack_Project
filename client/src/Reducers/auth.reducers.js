@@ -19,8 +19,20 @@ let auth_reducer = (state = initial_state, action) =>{
             return {
                 ...state,
                 authenticating: true,
+                isLogged: false,
+            }
+        case authConstants.GET_TOKEN_SUCCESS_AFTER_LOGIN :           
+            return {
+                ...state,
+                isLogged: true
             }
           
+        case authConstants.IS_ADMIN :           
+            return {
+                ...state,
+                isAdmin: action.payload.isAdmin
+            }
+
         case authConstants.LOGIN_SUCCESS :    
                            
             return {
@@ -36,7 +48,8 @@ let auth_reducer = (state = initial_state, action) =>{
             return {
                 ...state,
                 error: action.payload.error,
-                success:''
+                success:'',
+                isLogged: false,
             }
 
         case authConstants.SIGNUP_REQUEST:           
