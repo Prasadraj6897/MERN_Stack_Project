@@ -13,6 +13,7 @@ import { authConstants } from "../Constants/Constants";
 import { getUserDetail_action } from "../Actions/userDetail.action";
 import Forgot_Password from '../Components/Forgot_Password/Forgot_Password'
 import Reset_Password from '../Components/Reset_Password/Reset_Password'
+import Profile from "../Components/Profile/Profile";
 let Routers = () => {
 
     const dispatch = useDispatch();
@@ -52,6 +53,8 @@ let Routers = () => {
                     <Route  path="/user/reset/:token" component={Reset_Password} exact/>
                     
                     <Route  path="/user/activate/:activation_token" component={ActivationEmail} />
+
+                    <Route  path="/profile" component={Profile} />
                     
                 </Switch>
             </Router>
