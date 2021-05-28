@@ -57,7 +57,7 @@ const Login = (props) => {
 
                <div className="row">
                     <button type="submit">Login</button>
-                    <Link to="/forget_password">Forget Your Password</Link>
+                    <Link to="/forgot_password">Forget Your Password</Link>
                </div>
                 <br />
                <div className="row" style={{marginLeft:"60px"}}>

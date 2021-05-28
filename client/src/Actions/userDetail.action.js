@@ -31,7 +31,7 @@ let getUserDetail_action = (token) => {
                 
             
         }catch(error){
-            console.log("errorerror", error.response.data)
+            // console.log("errorerror", error.response.data)
             if(error.response)
             {
                 dispatch({

@@ -11,12 +11,14 @@ import { getToken_action } from "../Actions/token.action";
 import { login_action } from "../Actions/auth.action";
 import { authConstants } from "../Constants/Constants";
 import { getUserDetail_action } from "../Actions/userDetail.action";
+import Forgot_Password from '../Components/Forgot_Password/Forgot_Password'
+import Reset_Password from '../Components/Reset_Password/Reset_Password'
 let Routers = () => {
 
     const dispatch = useDispatch();
     const token = useSelector(state => state.Token_Root_Reducer.token)
     const User = useSelector(state =>state.Auth_Root_Reducer)
-    
+
     useEffect(()=>{
         const firstLogin = localStorage.getItem('firstlogin')
         if(firstLogin)
@@ -45,7 +47,12 @@ let Routers = () => {
                 <Switch>
                     <Route exact path='/signin' component={Login} />
                     <Route exact path='/signup' component={Register} />
-                    <Route exact path="/user/activate/:activation_token" component={ActivationEmail} />
+
+                    <Route path='/forgot_password' component={Forgot_Password} exact/>
+                    <Route  path="/user/reset/:token" component={Reset_Password} exact/>
+                    
+                    <Route  path="/user/activate/:activation_token" component={ActivationEmail} />
+                    
                 </Switch>
             </Router>
         </div>

@@ -170,7 +170,7 @@ export const ForgetPasswordController = async (req, res)=>{
         }
         const access_token = createAccessToken({id:existingUser._id})
 
-        const url = `${process.env.CLIENT_URL}/user/activate/${access_token}`        
+        const url = `${process.env.CLIENT_URL}/user/reset/${access_token}`        
         
         sendMail(email, url, "Reset Password")
 
