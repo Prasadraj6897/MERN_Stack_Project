@@ -1,0 +1,59 @@
+.edit_page{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.edit_page .col-left{ 
+    max-width: 400px;
+    min-width: 300px;
+    padding: 0 10px;
+    margin: auto;
+}
+
+.edit_page .col-left label{
+    display: block;
+    margin-top: 5px;
+}
+.edit_page .col-left input{
+    width: 100%;
+    height: 40px;
+    margin: 5px 0;
+    border: none;
+    outline: none;
+    background: #fee;
+    padding: 0 5px;
+}
+
+.edit_page .col-left button{
+    background: #333;
+    color: white;
+    padding: 10px 25px;
+    /* text-transform: uppercase; */
+    letter-spacing: 1.4px;
+    margin: 10px 0;
+}
+.edit_user .go_back{
+    background: white;
+    margin: 20px;
+    font-size: 1.2rem;
+}
+
+.edit_user .col-left{
+    margin-top: 50px;
+}
+.edit_user .col-left input{
+    background: #eee;
+}
+
+.edit_user .col-left #isAdmin{
+    width: 20px;
+    height: 20px;
+    transform: translateY(3px);
+    margin: 10px 0;
+}
+
+.edit_user .col-left #isAdmin + label{
+    display: inline-block;
+    margin-left: 5px;
+}

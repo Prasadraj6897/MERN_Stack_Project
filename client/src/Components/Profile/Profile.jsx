@@ -137,7 +137,7 @@ const Profile = (props) => {
         {
             dispatch(All_User_Detail_action(token))
         }
-        dispatch(getUserDetail_action(token))
+        // dispatch(getUserDetail_action(token))
     },[token, isAdmin, dispatch, callback, UserDetail])
 
 
