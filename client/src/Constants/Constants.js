@@ -10,7 +10,9 @@ export const authConstants = {
     SIGNUP_FAILURE : "SIGNUP_FAILURE",
 
     GET_TOKEN_SUCCESS_AFTER_LOGIN : "GET_TOKEN_SUCCESS_AFTER_LOGIN",
-    IS_ADMIN : "IS_ADMIN"
+    IS_ADMIN : "IS_ADMIN",
+
+    "GOOGLE_LOGIN": "GOOGLE_LOGIN"
 }
 
 export const tokenConstants = {

@@ -48,7 +48,7 @@ let auth_reducer = (state = initial_state, action) =>{
                            
             return {
                 ...state,
-                error: action.payload.error,
+                error: action.payload.error ? action.payload.error : null ,
                 success:'',
                 isLogged: false,
             }
@@ -74,7 +74,13 @@ let auth_reducer = (state = initial_state, action) =>{
                 error: action.payload.error,
                 success:''
             }
-        
+
+        case authConstants.GOOGLE_LOGIN :           
+            return {
+                ...state,
+                isLogged: true
+            }
+       
         default:
             return state;
     }

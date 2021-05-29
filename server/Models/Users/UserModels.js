@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
     },
     lastName :{
         type: String,
-        required: true,
+
         trim: true,
         min: 3,
         max: 20,
@@ -19,11 +19,11 @@ const userSchema = mongoose.Schema({
     gender: {
         type: String,
         enum: ['Male', 'Female'],
-        required: true,
+
     },
     DOB: {
         type: String,
-        required: true,
+
     },
     Location: {
         type: String,
@@ -42,7 +42,7 @@ const userSchema = mongoose.Schema({
     },
     ConfirmPassword : {
         type: String,
-        required: true,
+ 
     },
     role : {
         type: String,

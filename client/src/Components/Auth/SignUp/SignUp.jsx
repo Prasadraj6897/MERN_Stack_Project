@@ -53,8 +53,10 @@ const Register = (props) => {
     const User = useSelector(state =>state.Auth_Root_Reducer)
     
 	useEffect(()=>{
-		{User.error ? seterr(User.error) : null }
-		{User.success ? setsuccess(User.success) : null }
+		const err = User.error ? User.error : null;
+		const succ = User.success ? User.success : null;
+		seterr(err)
+		setsuccess(succ) 
 	},[User])
     const handleSubmit = (e) =>{
         e.preventDefault()

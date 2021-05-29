@@ -2,7 +2,7 @@ import express from "express"
 import { activateEmail, DeleteUserController, ForgetPasswordController, getAccessTokenController, 
 getALLUserInfoController, getUserInfoController, LogoutController, 
 ResetPasswordController, signInController, signUpController,
- UpdateUserInfoController, UpdateUserRoleController } from "../../Controllers/UserController/UserController.js";
+ UpdateUserInfoController, UpdateUserRoleController, google_login_Controller } from "../../Controllers/UserController/UserController.js";
 
 import { isRequestValidators, SignUpValidationRequest, SignInValidationRequest } from "../../Validators/auth.validator.js";
 import { authMiddleware } from "../../Controllers/AuthMiddlewareController/authMiddleware.js";
@@ -26,5 +26,8 @@ router.patch('/update', authMiddleware, UpdateUserInfoController)
 router.patch('/update_role/:id', authMiddleware, authAdmin, UpdateUserRoleController)
 
 router.delete('/delete/:id', authMiddleware, authAdmin, DeleteUserController)
+
+//social
+router.post('/google_login', google_login_Controller)
 
 export default router;

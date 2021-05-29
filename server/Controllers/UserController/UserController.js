@@ -3,8 +3,13 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import {sendMail} from '../../UserMail/UserMail.js'
 
+import {google} from 'googleapis'
+
 import dotenv from 'dotenv'
 dotenv.config();
+
+const {OAuth2} = google.auth
+const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID);
 
 
 // for signup after mail verrify
@@ -32,7 +37,7 @@ export const signUpController = async (req, res)=>{
     try{
         if(!firstName || !lastName || !email || !password || !ConfirmPassword)
         {
-            return res.status(400).json({msg: "Please fill in all fields."})
+            return res.status(400).json({message: "Please fill in all fields."})
         }
         
 
@@ -294,5 +299,62 @@ export const DeleteUserController = async (req, res)=>{
     catch(error){
        
        return res.status(500).json({message : "Something went wrong"})
+    }
+}
+
+export const google_login_Controller =  async (req, res) => {
+    try {
+        const {tokenId} = req.body
+        // console.log(tokenId)
+        const verify = await client.verifyIdToken({idToken: tokenId, audience: process.env.MAILING_SERVICE_CLIENT_ID})
+        // console.log(verify)
+        const {email_verified, email, name, picture} = verify.payload
+
+        const password = email + process.env.GOOGLE_SECRET
+
+        const passwordHash = await bcrypt.hash(password, 12)
+
+        if(!email_verified){
+            return res.status(400).json({message: "Email verification failed."})
+        } 
+
+        const user = await Users.findOne({email})
+
+        if(user){
+            const isMatch = await bcrypt.compare(password, user.password)
+            if(!isMatch){
+                return res.status(400).json({message: "Password is incorrect."})
+            }
+
+            const refresh_token = createRefreshToken({id: user._id})
+            
+            res.cookie('refresh_token', refresh_token,{
+                httpOnly: true,
+                path: '/users/refresh_token',
+                maxAge: 7*24*60*60*1000, // 7 Days validity
+            })
+
+            res.json({message: "Login success!"})
+        }else{
+            const newUser = new Users({
+                firstName: name, email, password: passwordHash, avatar: picture
+            })
+
+            await newUser.save()
+            
+            const refresh_token = createRefreshToken({id: newUser._id})
+            
+            res.cookie('refresh_token', refresh_token,{
+                httpOnly: true,
+                path: '/users/refresh_token',
+                maxAge: 7*24*60*60*1000, // 7 Days validity
+            })
+
+            res.json({message: "Login success!"})
+        }
+
+
+    } catch (err) {
+        return res.status(500).json({message: err.message})
     }
 }

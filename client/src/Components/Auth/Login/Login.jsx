@@ -2,9 +2,11 @@ import React, { useState,useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import './style.css'
-import { login_action } from '../../../Actions/auth.action'
+import { google_login_action, login_action } from '../../../Actions/auth.action'
 import { showErrMsg, showSuccessMsg } from '../../Utils/Notification/Notification'
+import {GoogleLogin} from 'react-google-login'
 
+import axios from 'axios';
 /**
 * @author
 * @function Login
@@ -33,8 +35,28 @@ const Login = (props) => {
 
         dispatch(login_action(payload, history))
         
-        
     }
+
+    const responseGoogle = async (response) =>{
+        // console.log(response)
+        try{
+            const res = await axios.post('/users/google_login',{
+                tokenId : response.tokenId
+            })
+            localStorage.setItem('firstlogin', true)
+
+            setsuccess(res.data.message)
+            seterr('')
+            dispatch(google_login_action())
+            history.push('/')
+        }
+        catch(err)
+        {
+            err.response.data.message && seterr(err.response.data.message)
+            setsuccess('')
+        }
+    }
+
   return(
        <div className='loginPage'>
            {/* {JSON.stringify(User)} */}
@@ -43,6 +65,9 @@ const Login = (props) => {
            
            {User.error ? showErrMsg(User.error) : null }
            {User.success ? showSuccessMsg(User.success) : null}
+
+           {err ? showErrMsg(err) : null }
+           {success ? showSuccessMsg(success) : null}
 
            <form onSubmit={handleSubmit}>
                <div>
@@ -59,7 +84,20 @@ const Login = (props) => {
                     <button type="submit">Login</button>
                     <Link to="/forgot_password">Forget Your Password</Link>
                </div>
+                
                 <br />
+                <div className="hr">Or Login With</div>
+
+                <div className="social">
+                    <GoogleLogin
+                        clientId="413243986076-ul63eb87errvet4jnq7flsk7hr0n638c.apps.googleusercontent.com"
+                        buttonText="Login with google"
+                        onSuccess={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                    
+                </div>
+
                <div className="row" style={{marginLeft:"60px"}}>
                     <Link to="/signup">Dont't Have an account, Signup Now</Link>
                </div>

@@ -83,4 +83,26 @@ let signup_action = (userdata) => {
     } 
 }
 
-export {login_action, signup_action};
+
+let google_login_action = () => {
+    return async (dispatch) => {
+        
+        try{
+
+                dispatch(
+                    {
+                        type : authConstants.GOOGLE_LOGIN, 
+                       
+                    }
+                )
+
+            }
+            
+        catch(error){
+            
+           
+        }
+    } 
+}
+
+export {login_action, signup_action, google_login_action};

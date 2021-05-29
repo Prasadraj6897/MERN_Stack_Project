@@ -13,12 +13,14 @@
     "react-bootstrap-date-picker": "^5.1.0",
     "react-datepicker": "^3.8.0",
     "react-dom": "^17.0.2",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
     "react-icons": "^4.2.0",
     "react-phone-input-2": "^2.14.0",
     "react-phone-number-input": "^3.1.22",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^4.0.3",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
@@ -49,6 +51,5 @@
       "last 1 safari version"
     ]
   },
-    "proxy": "http://localhost:5000"
-  
+  "proxy": "http://localhost:5000"
 }
