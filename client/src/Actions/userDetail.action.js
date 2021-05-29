@@ -8,6 +8,7 @@ let getUserDetail_action = (token) => {
                 const res = await axios.get('/users/getUserInfo', {
                     headers: {Authorization: token}
                 })
+                console.log("resreseres", res.data)
                 if(res.status == 200)
                 {
                     dispatch(

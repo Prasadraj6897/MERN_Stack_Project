@@ -41,7 +41,8 @@ let auth_reducer = (state = initial_state, action) =>{
                 authenticating: false,
                 success:action.payload.message,
                 error: null,
-                isLogged: true
+                isLogged: true,
+                isAdmin: action.payload.isAdmin
             }
         case authConstants.LOGIN_FAILURE :    
                            
