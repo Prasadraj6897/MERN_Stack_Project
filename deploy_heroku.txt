@@ -1,0 +1,34 @@
+// for production use below code inside
+
+ const path = require('path')
+
+
+ if(process.env.NODE_ENV === 'production'){
+   app.use(express.static('client/build'))
+   app.get('*', (req, res)=>{
+       res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+   })
+}
+
+// In Package.json file add this in start instead delete old (be careful)
+
+------below it is server but ours is start.js(Replace it)------------------------
+    
+    npm i concurrently
+
+
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "cd client && npm run start",
+    "server-install": "npm install",
+    "client-install": "cd client && npm install",
+    "install-all": "concurrently \"npm run server-install\"  \"npm run client-install\"",
+    "dev": "concurrently \"npm run server\"  \"npm run client\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+
+  ---------------------------------------------------
+
+  dont forget to change local url in google developer console and facebook developer  console crendential
+
