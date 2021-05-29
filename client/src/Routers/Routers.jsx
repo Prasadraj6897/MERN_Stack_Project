@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import ActivationEmail from "../Components/Auth/ActivationEmail/ActivationEmail";
 import Login from "../Components/Auth/Login/Login";
 import Register from "../Components/Auth/SignUp/SignUp";
-// import Body from "../Components/Body/Body";
+import Body from "../Components/Body/Body";
 import Headers from "../Components/Header/Headers";
 import axios from 'axios';
 import { getToken_action } from "../Actions/token.action";
@@ -48,6 +48,7 @@ let Routers = () => {
             <Router>
                 <Headers />
                 <Switch>
+                    <Route exact path='/' component={Body} />
                     <Route exact path='/signin' component={Login} />
                     <Route exact path='/signup' component={Register} />
 
