@@ -30,9 +30,9 @@ const Headers = (props) => {
 		}
 	}
 
-	useEffect(()=>{
-		dispatch(getUserDetail_action(token))
-	},[UserDetail])
+	// useEffect(()=>{
+	// 	dispatch(getUserDetail_action(token))
+	// },[UserDetail.firstName])
 
 	const userLink = () => {
 		return <li className="drop-nav">
