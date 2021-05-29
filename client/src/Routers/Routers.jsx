@@ -14,6 +14,8 @@ import { getUserDetail_action } from "../Actions/userDetail.action";
 import Forgot_Password from '../Components/Forgot_Password/Forgot_Password'
 import Reset_Password from '../Components/Reset_Password/Reset_Password'
 import Profile from "../Components/Profile/Profile";
+import EditUserRole from "../Components/EditUserRole/EditUserRole"
+
 let Routers = () => {
 
     const dispatch = useDispatch();
@@ -55,6 +57,8 @@ let Routers = () => {
                     <Route  path="/user/activate/:activation_token" component={ActivationEmail} />
 
                     <Route  path="/profile" component={Profile} />
+
+                    <Route  path="/edit_user/:id" component={EditUserRole} />
                     
                 </Switch>
             </Router>

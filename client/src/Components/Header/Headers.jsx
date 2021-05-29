@@ -1,8 +1,9 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import './Header.css'
+import { getUserDetail_action } from '../../Actions/userDetail.action'
 /**
 * @author
 * @function Headers
@@ -13,9 +14,11 @@ const Headers = (props) => {
 	const User = useSelector(state =>state.Auth_Root_Reducer)
 	const { isLogged} = User
 
+	const dispatch = useDispatch()
+   
+	const UserDetail = useSelector(state =>state.User_Detail_Root_Reducer.userData)
+	const token = useSelector(state => state.Token_Root_Reducer.token)
 	
-    const UserDetail = useSelector(state =>state.User_Detail_Root_Reducer.userData)
-
 	const handleLogout = async () =>{
 		try{
 			await axios.get('/users/logout')
@@ -26,6 +29,10 @@ const Headers = (props) => {
 			window.location.href="/"
 		}
 	}
+
+	useEffect(()=>{
+		dispatch(getUserDetail_action(token))
+	},[UserDetail])
 
 	const userLink = () => {
 		return <li className="drop-nav">

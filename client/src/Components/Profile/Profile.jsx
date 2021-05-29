@@ -9,6 +9,7 @@ import { showErrMsg, showSuccessMsg } from '../Utils/Notification/Notification'
 import {  isLength, isMatch } from '../Utils/Validation/Validation'
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserDetail_action } from '../../Actions/userDetail.action';
+import { All_User_Detail_action } from '../../Actions/AllUserdetail.action';
 /**
 * @author
 * @function Profile
@@ -32,6 +33,7 @@ const Profile = (props) => {
     const UserDetail = useSelector(state =>state.User_Detail_Root_Reducer.userData)
     const token = useSelector(state => state.Token_Root_Reducer.token)
     const User = useSelector(state =>state.Auth_Root_Reducer)
+    const AllUserDetails = useSelector(state =>state.All_user_root_Reducer.AlluserData)
 
     const {isAdmin} = User
 
@@ -66,7 +68,7 @@ const Profile = (props) => {
             const res = await axios.post('/api/uploadAvatar', formData, {
                 headers: {'content-type': 'multipart/form-data', Authorization: token}
             })
-            console.log(res.data)
+            // console.log(res.data)
             setLoading(false)
             setAvatar(res.data.url)
 
@@ -89,10 +91,11 @@ const Profile = (props) => {
             })
 
             setData({...data, err: '' , success: "Updated Success!"})
+            dispatch(getUserDetail_action(token))
         } catch (err) {
             setData({...data, err: err.response.data.msg , success: ''})
         }
-        dispatch(getUserDetail_action(token))
+       
     }
 
     const updatePassword = () => {
@@ -129,7 +132,19 @@ const Profile = (props) => {
         }
     }
 
+    useEffect(()=>{
+        if(isAdmin)
+        {
+            dispatch(All_User_Detail_action(token))
+        }
+        dispatch(getUserDetail_action(token))
+    },[token, isAdmin, dispatch, callback, UserDetail])
 
+
+    const handleDelete = () => {
+
+    }
+    
   return(
         <div>
             <div>
@@ -198,11 +213,29 @@ const Profile = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <td>ID</td>
-                                <td>First_Name</td>
-                                <td>Email</td>
-                                <td>Admin</td>
-                                <td>Action</td>
+                                {
+                                   AllUserDetails && AllUserDetails.map((users, index)=>(
+                                        <tr key={users._id}>
+                                            <td>{users._id}</td>
+                                            <td>{users.firstName}</td>
+                                            <td>{users.email}</td>
+                                            <td>
+                                            {
+                                                users.role === "admin"
+                                                ? <i className="fas fa-check" title="Admin"></i>
+                                                : <i className="fas fa-times" title="User"></i>
+                                            }
+                                        </td>
+                                        <td>
+                                            <Link to={`/edit_user/${users._id}`}>
+                                                <i className="fas fa-edit" title="Edit"></i>
+                                            </Link>
+                                            <i className="fas fa-trash-alt" title="Remove"
+                                            onClick={() => handleDelete(users._id)} ></i>
+                                        </td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
                     </div>
