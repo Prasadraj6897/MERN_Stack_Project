@@ -4,7 +4,9 @@ import {useDispatch, useSelector} from 'react-redux'
 import './style.css'
 import { google_login_action, login_action } from '../../../Actions/auth.action'
 import { showErrMsg, showSuccessMsg } from '../../Utils/Notification/Notification'
+
 import {GoogleLogin} from 'react-google-login'
+import FacebookLogin from 'react-facebook-login';
 
 import axios from 'axios';
 /**
@@ -57,6 +59,28 @@ const Login = (props) => {
         }
     }
 
+    const responseFacebook = async (response) => {
+        try {
+            console.log(response)
+            const {accessToken, userID} = response
+            const res = await axios.post('/users/facebook_login', {accessToken, userID})
+
+           
+            localStorage.setItem('firstlogin', true)
+
+            setsuccess(res.data.message)
+            seterr('')
+            
+            dispatch(google_login_action())
+
+            history.push('/')
+
+        } catch (err) {
+             err.response.data.message && seterr(err.response.data.message)
+            setsuccess('')
+        }
+    }
+
   return(
        <div className='loginPage'>
            {/* {JSON.stringify(User)} */}
@@ -94,6 +118,13 @@ const Login = (props) => {
                         buttonText="Login with google"
                         onSuccess={responseGoogle}
                         cookiePolicy={'single_host_origin'}
+                    />
+
+                    <FacebookLogin
+                        appId="523259772429040"
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        callback={responseFacebook} 
                     />
                     
                 </div>

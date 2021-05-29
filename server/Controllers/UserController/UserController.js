@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import {sendMail} from '../../UserMail/UserMail.js'
 
 import {google} from 'googleapis'
-
+import fetch from 'node-fetch'
 import dotenv from 'dotenv'
 dotenv.config();
 
@@ -351,6 +351,59 @@ export const google_login_Controller =  async (req, res) => {
             })
 
             res.json({message: "Login success!"})
+        }
+
+
+    } catch (err) {
+        return res.status(500).json({message: err.message})
+    }
+}
+
+export const facebook_login_Controller =  async (req, res) => {
+    try {
+        const {accessToken, userID} = req.body
+
+        const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
+        
+        const data = await fetch(URL).then(res => res.json()).then(res => {return res})
+
+        const {email, name, picture} = data
+
+        const password = email + process.env.FACEBOOK_SECRET
+
+        const passwordHash = await bcrypt.hash(password, 12)
+
+        const user = await Users.findOne({email})
+
+        if(user){
+            const isMatch = await bcrypt.compare(password, user.password)
+            if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
+
+            const refresh_token = createRefreshToken({id: user._id})
+            
+            res.cookie('refresh_token', refresh_token,{
+                httpOnly: true,
+                path: '/users/refresh_token',
+                maxAge: 7*24*60*60*1000, // 7 Days validity
+            })
+            
+            res.json({msg: "Login success!"})
+        }else{
+            const newUser = new Users({
+                firstName: name, email, password: passwordHash, avatar: picture.data.url
+            })
+
+            await newUser.save()
+            
+            const refresh_token = createRefreshToken({id: newUser._id})
+            
+            res.cookie('refresh_token', refresh_token,{
+                httpOnly: true,
+                path: '/users/refresh_token',
+                maxAge: 7*24*60*60*1000, // 7 Days validity
+            })
+
+            res.json({msg: "Login success!"})
         }
 
 
