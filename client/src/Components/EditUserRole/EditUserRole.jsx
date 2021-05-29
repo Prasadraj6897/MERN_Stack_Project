@@ -51,7 +51,7 @@ const handleUpdate = async () => {
 			setuserRole('user')
 		
 	} catch (err) {
-		err.response.data.msg && setErr(err.response.data.msg)
+		err.response.data.message && setErr(err.response.data.message)
 	}
 }
 

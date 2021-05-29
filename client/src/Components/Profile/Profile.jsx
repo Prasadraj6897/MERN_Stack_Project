@@ -141,8 +141,22 @@ const Profile = (props) => {
     },[token, isAdmin, dispatch, callback, UserDetail])
 
 
-    const handleDelete = () => {
-
+    const handleDelete = async (id) => {
+        try {
+            if(UserDetail._id !== id){
+                if(window.confirm("Are you sure you want to delete this account?")){
+                    setLoading(true)
+                    await axios.delete(`/users/delete/${id}`, {
+                        headers: {Authorization: token}
+                    })
+                    setLoading(false)
+                    setCallback(!callback)
+                }
+            }
+            
+        } catch (err) {
+            setData({...data, err: err.response.data.message , success: ''})
+        }
     }
     
   return(
